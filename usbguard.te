@@ -85,6 +85,7 @@ files_pid_filetrans(usbguard_t, usbguard_var_run_t, file)
 
 manage_files_pattern(usbguard_t, usbguard_tmpfs_t, usbguard_tmpfs_t)
 fs_tmpfs_filetrans(usbguard_t, usbguard_tmpfs_t, file)
+allow usbguard_t usbguard_tmpfs_t:file map;
 
 manage_files_pattern(usbguard_t, usbguard_log_t, usbguard_log_t)
 logging_log_filetrans(usbguard_t, usbguard_log_t, { file dir })
