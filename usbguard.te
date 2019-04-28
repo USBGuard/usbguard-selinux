@@ -101,3 +101,14 @@ tunable_policy(`usbguard_daemon_write_rules',`
 tunable_policy(`usbguard_daemon_write_conf',`
 	rw_files_pattern(usbguard_t, usbguard_conf_t, usbguard_conf_t)
 ')
+
+# Allow confined users to communicate with usbguard over unix socket
+optional_policy(`
+    gen_require(`
+        attribute x_userdomain;
+    ')
+
+    allow x_userdomain usbguard_t:unix_stream_socket connectto;
+    manage_files_pattern(x_userdomain, usbguard_tmpfs_t, usbguard_tmpfs_t)
+    allow x_userdomain usbguard_tmpfs_t:file map;
+')
