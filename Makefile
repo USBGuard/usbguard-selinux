@@ -37,6 +37,6 @@ install-policy: all
 	semodule -i ${TARGETS}.pp.bz2
 
 install: man
-	install -D -m 644 ${TARGETS}.pp.bz2 ${DESTDIR}${SHAREDIR}/selinux/packages/usbguard.pp.bz2
-	install -D -m 644 container.if ${DESTDIR}${SHAREDIR}/selinux/devel/include/services/usbguard.if
-	install -D -m 644 container_selinux.8 ${DESTDIR}${SHAREDIR}/man/man8/
+	install -D -m 644 ${TARGETS}.pp.bz2 ${DESTDIR}${SHAREDIR}/selinux/packages/${TARGETS}.pp.bz2
+	install -D -m 644 ${TARGETS}.if ${DESTDIR}${SHAREDIR}/selinux/devel/include/services/${TARGETS}.if
+	install -D -m 644 ${TARGETS}_selinux.8 ${DESTDIR}${SHAREDIR}/man/man8/
