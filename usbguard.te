@@ -70,6 +70,7 @@ files_pid_file(usbguard_var_run_t)
 
 allow usbguard_t self:capability { chown fowner };
 allow usbguard_t self:netlink_kobject_uevent_socket { bind create setopt read };
+allow usbguard_t self:netlink_audit_socket { nlmsg_relay create_netlink_socket_perms };
 
 auth_read_passwd(usbguard_t)
 
