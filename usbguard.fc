@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+/etc/usbguard/rules\.d(/.*)?                 gen_context(system_u:object_r:usbguard_rules_t,s0)
 /etc/usbguard/rules.conf                  -- gen_context(system_u:object_r:usbguard_rules_t,s0)
 /etc/usbguard(/.*)?                          gen_context(system_u:object_r:usbguard_conf_t,s0)
 /dev/shm/qb-usbguard-.*                   -- gen_context(system_u:object_r:usbguard_tmpfs_t,s0)
