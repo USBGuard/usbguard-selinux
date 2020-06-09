@@ -81,6 +81,7 @@ list_dirs_pattern(usbguard_t,usbguard_conf_t,usbguard_conf_t)
 read_files_pattern(usbguard_t,usbguard_conf_t,usbguard_conf_t)
 dontaudit usbguard_t usbguard_conf_t:file write;
 
+list_dirs_pattern(usbguard_t,usbguard_rules_t,usbguard_rules_t)
 read_files_pattern(usbguard_t,usbguard_conf_t,usbguard_rules_t)
 
 manage_dirs_pattern(usbguard_t, usbguard_var_run_t, usbguard_var_run_t)
