@@ -68,16 +68,9 @@ files_pid_file(usbguard_var_run_t)
 # Local policy
 #
 
-allow usbguard_t self:capability { chown fowner audit_write };
-allow usbguard_t self:netlink_kobject_uevent_socket { bind create setopt read };
-allow usbguard_t self:netlink_audit_socket { nlmsg_relay create_netlink_socket_perms };
-
-auth_read_passwd(usbguard_t)
-
-dev_list_sysfs(usbguard_t)
-dev_rw_sysfs(usbguard_t)
-
-kernel_read_system_state(usbguard_t)
+allow usbguard_t self:capability { audit_write chown fowner };
+allow usbguard_t self:netlink_kobject_uevent_socket { bind create read setopt };
+allow usbguard_t self:netlink_audit_socket { create_netlink_socket_perms nlmsg_relay };
 
 list_dirs_pattern(usbguard_t,usbguard_conf_t,usbguard_conf_t)
 read_files_pattern(usbguard_t,usbguard_conf_t,usbguard_conf_t)
@@ -90,33 +83,43 @@ manage_files_pattern(usbguard_t, usbguard_var_run_t, usbguard_var_run_t)
 files_pid_filetrans(usbguard_t, usbguard_var_run_t, file)
 
 manage_files_pattern(usbguard_t, usbguard_tmpfs_t, usbguard_tmpfs_t)
-fs_tmpfs_filetrans(usbguard_t, usbguard_tmpfs_t, { file dir })
+fs_tmpfs_filetrans(usbguard_t, usbguard_tmpfs_t, { dir file })
 manage_dirs_pattern(usbguard_t, usbguard_tmpfs_t, usbguard_tmpfs_t)
 allow usbguard_t usbguard_tmpfs_t:file map;
 
 manage_files_pattern(usbguard_t, usbguard_log_t, usbguard_log_t)
-logging_log_filetrans(usbguard_t, usbguard_log_t, { file dir })
+logging_log_filetrans(usbguard_t, usbguard_log_t, { dir file })
+
+kernel_read_system_state(usbguard_t)
+
+dev_list_sysfs(usbguard_t)
+dev_rw_sysfs(usbguard_t)
+
+auth_read_passwd(usbguard_t)
 
 logging_send_syslog_msg(usbguard_t)
 
-dbus_system_domain(usbguard_t, usbguard_exec_t)
 usbguard_ipc_access(usbguard_t)
-
-tunable_policy(`usbguard_daemon_write_rules',`
-	rw_files_pattern(usbguard_t, usbguard_rules_t, usbguard_rules_t)
-')
 
 tunable_policy(`usbguard_daemon_write_conf',`
 	rw_files_pattern(usbguard_t, usbguard_conf_t, usbguard_conf_t)
 ')
 
+tunable_policy(`usbguard_daemon_write_rules',`
+	rw_files_pattern(usbguard_t, usbguard_rules_t, usbguard_rules_t)
+')
+
+optional_policy(`
+	dbus_system_domain(usbguard_t, usbguard_exec_t)
+')
+
 # Allow confined users to communicate with usbguard over unix socket
 optional_policy(`
-    gen_require(`
-        attribute x_userdomain;
-    ')
+	gen_require(`
+		attribute x_userdomain;
+	')
 
-    allow x_userdomain usbguard_t:unix_stream_socket connectto;
-    manage_files_pattern(x_userdomain, usbguard_tmpfs_t, usbguard_tmpfs_t)
-    allow x_userdomain usbguard_tmpfs_t:file map;
+	allow x_userdomain usbguard_t:unix_stream_socket connectto;
+	manage_files_pattern(x_userdomain, usbguard_tmpfs_t, usbguard_tmpfs_t)
+	allow x_userdomain usbguard_tmpfs_t:file map;
 ')
