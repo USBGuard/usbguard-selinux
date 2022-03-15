@@ -111,6 +111,10 @@ tunable_policy(`usbguard_daemon_write_rules',`
 
 optional_policy(`
 	dbus_system_domain(usbguard_t, usbguard_exec_t)
+
+	optional_policy(`
+		policykit_dbus_chat(usbguard_t)
+	')
 ')
 
 # Allow confined users to communicate with usbguard over unix socket
