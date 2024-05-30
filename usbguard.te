@@ -127,3 +127,9 @@ optional_policy(`
 	manage_files_pattern(x_userdomain, usbguard_tmpfs_t, usbguard_tmpfs_t)
 	allow x_userdomain usbguard_tmpfs_t:file map;
 ')
+
+ifdef(`systemd_userdbd_stream_connect',`
+	optional_policy(`
+		systemd_userdbd_stream_connect(usbguard_t)
+        ')
+')
