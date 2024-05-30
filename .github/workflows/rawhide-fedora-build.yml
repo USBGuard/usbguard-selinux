@@ -21,7 +21,7 @@ jobs:
       run: cat /etc/fedora-release
 
     - name: installing dependecies
-      run: dnf -y install dnf-plugins-core python3-dnf-plugins-core; dnf -y builddep usbguard selinux-policy
+      run: dnf -y install 'dnf5-command(builddep)'; dnf -y builddep usbguard selinux-policy
 
     - name: make
       run: make
