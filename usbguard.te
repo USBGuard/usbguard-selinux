@@ -139,3 +139,9 @@ ifdef(`systemd_homed_stream_connect',`
 		systemd_homed_stream_connect(usbguard_t)
 	')
 ')
+
+ifdef(`xserver_stream_connect_xdm',`
+	optional_policy(`
+		xserver_stream_connect_xdm(usbguard_t)
+	')
+')
